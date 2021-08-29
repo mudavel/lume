@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     async createAccount() {
-      await this.$axios.post('http://localhost:3001/api/auth/register', {
+      await this.$axios.post('/api/auth/register', {
         username: this.username,
         email: this.email,
         password: this.password,
