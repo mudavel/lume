@@ -102,13 +102,6 @@ export default {
     singleton: true,
   },
 
-  // privateRuntimeConfig: {
-  //   ACCESS_TOKEN_SECRET:
-  //     'b475cc8573555862655c5eb196ddae4a350c860a9d8bcf0f45d6ed3890889f02e5c1bd290b2f48b0ac1c4554200b576443f1ddf61fb3e9bcc0c07c8e58c9bc29',
-  //   DB_CONNECTION:
-  //     'mongodb+srv://usuarioteste:testeusuario@primeirocluster.vcadi.mongodb.net/lume-db',
-  // },
-
   serverMiddleware:
     process.env.NODE_ENV === 'production'
       ? []
