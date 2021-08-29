@@ -1,0 +1,25 @@
+.page-enter-active,
+.page-leave-active
+  transition: opacity 0.3s
+
+.page-enter,
+.page-leave-to
+  opacity: 0
+
+.forward-enter-active,
+.forward-leave-active,
+.back-enter-active,
+.back-leave-active
+  transition: 0.2s
+
+.forward-enter
+  transform: translate(-100%)
+
+.forward-leave-to
+  transform: translate(100%)
+
+.back-enter
+  transform: translate(100%)
+
+.back-leave-to
+  transform: translate(-100%)

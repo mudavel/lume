@@ -1,0 +1,26 @@
+@keyframes letter-spacing
+  25%
+    letter-spacing: 5px
+  75%
+    letter-spacing: -5px
+  100%
+    letter-spacing: 0px
+
+h1
+  margin-bottom: 40px
+  font-size: 5em
+  font-weight: normal
+  letter-spacing: 0px
+  transition: 0.3s
+  user-select: none
+
+  &:active
+    animation: letter-spacing 0.75s infinite linear
+
+a, button
+  width: 20%
+  height: 50px
+  font-size: 1.3em
+  font-family: 'Segoe UI'
+  &:hover
+    letter-spacing: 0.5px
