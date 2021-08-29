@@ -77,7 +77,10 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://lume.vercel.app',
+    baseURL:
+      process.env.NODE_ENV === 'production'
+        ? 'http://lume.vercel.app'
+        : 'http://localhost:3000',
   },
 
   pwa: {
