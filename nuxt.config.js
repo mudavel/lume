@@ -79,7 +79,7 @@ export default {
   axios: {
     baseURL:
       process.env.NODE_ENV === 'production'
-        ? 'http://lume.vercel.app'
+        ? 'https://lume.vercel.app'
         : 'http://localhost:3000',
   },
 
