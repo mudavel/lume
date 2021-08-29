@@ -109,7 +109,7 @@ export default {
   //     'mongodb+srv://usuarioteste:testeusuario@primeirocluster.vcadi.mongodb.net/lume-db',
   // },
 
-  serverMiddleware: ['~/api/app.js', '~/api/ws.js'],
+  serverMiddleware: ['./api/app.js', './api/ws.js'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
