@@ -1,16 +1,14 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-const passport = require('passport')
-const User = require('./model/User')
+// const passport = require('passport')
+const DB_CONNECTION = require('../config').DB_CONNECTION
+// const User = require('./model/User')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.initialize())
+// app.use(passport.session())
 
 // Routes
 const messagesRoute = require('./routes/messages')
@@ -30,7 +28,7 @@ app.use('/owner', userRoomsRoute)
 
 // Connect to DB
 mongoose.connect(
-  'mongodb+srv://usuarioteste:testeusuario@primeirocluster.vcadi.mongodb.net/lume-db', // DB_CONNECTION
+  DB_CONNECTION,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -42,7 +40,7 @@ mongoose.connect(
   }
 )
 
-passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser((id, done) => done(null, User.findById(id)))
+// passport.serializeUser((user, done) => done(null, user.id))
+// passport.deserializeUser((id, done) => done(null, User.findById(id)))
 
 export default { path: '/api', handler: app }

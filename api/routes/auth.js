@@ -6,13 +6,13 @@ const passport = require('passport')
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const User = require('../model/User')
+const ACCESS_TOKEN_SECRET = require('../../config').ACCESS_TOKEN_SECRET
 
 passport.use(
   new JwtStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey:
-        'b475cc8573555862655c5eb196ddae4a350c860a9d8bcf0f45d6ed3890889f02e5c1bd290b2f48b0ac1c4554200b576443f1ddf61fb3e9bcc0c07c8e58c9bc29', // access token
+      secretOrKey: ACCESS_TOKEN_SECRET,
     },
     async (jwtPayload, done) => {
       try {
@@ -59,21 +59,17 @@ router.post('/register', async (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
+  console.log('[debug] before try find user')
   try {
-    console.log('before find one user')
-    const user = await User.findOne({ email: req.body.email }).lean()
-    console.log('after find one user')
-    console.log(user)
-    console.log('after log find one user')
+    console.log('[debug] find user 1')
+    const user = await User.findOne({ email: req.body.email })
+    console.log('[debug] find user 2')
     if (user) {
       if (!(await bcrypt.compare(req.body.password, user.password))) {
         return res.json({ message: 'Invalid email or password' })
       }
       const jwtPayload = { _id: user._id, email: user.email }
-      const accessToken = jwt.sign(
-        jwtPayload,
-        'b475cc8573555862655c5eb196ddae4a350c860a9d8bcf0f45d6ed3890889f02e5c1bd290b2f48b0ac1c4554200b576443f1ddf61fb3e9bcc0c07c8e58c9bc29' // access token
-      )
+      const accessToken = jwt.sign(jwtPayload, ACCESS_TOKEN_SECRET)
 
       res.json({ token: accessToken })
     } else {

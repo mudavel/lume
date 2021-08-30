@@ -1,3 +1,5 @@
+import { BASE_URL, SERVER_MIDDLEWARE } from './config'
+
 export default {
   loading: false,
 
@@ -77,10 +79,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL:
-      process.env.NODE_ENV === 'production'
-        ? 'https://lume.vercel.app'
-        : 'http://localhost:3000',
+    baseURL: BASE_URL,
   },
 
   pwa: {
@@ -89,13 +88,13 @@ export default {
     },
   },
 
-  // io: {
-  //   sockets: [
-  //     {
-  //       url: 'http://localhost:3001',
-  //     },
-  //   ],
-  // },
+  io: {
+    sockets: [
+      {
+        url: 'http://localhost:3001',
+      },
+    ],
+  },
 
   toast: {
     theme: 'outline',
@@ -105,10 +104,7 @@ export default {
     singleton: true,
   },
 
-  serverMiddleware:
-    process.env.NODE_ENV === 'production'
-      ? []
-      : ['~/api/app.js' /* , '~/api/ws.js' */],
+  serverMiddleware: SERVER_MIDDLEWARE,
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
