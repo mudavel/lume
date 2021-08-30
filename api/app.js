@@ -2,7 +2,10 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 // const passport = require('passport')
-// const DB_CONNECTION = require('../config').DB_CONNECTION
+const DB_CONNECTION =
+  process.env.NODE_ENV === 'production'
+    ? process.env.DB_CONNECTION
+    : 'mongodb+srv://usuarioteste:testeusuario@primeirocluster.vcadi.mongodb.net/lume-db'
 // const User = require('./model/User')
 
 app.use(express.urlencoded({ extended: true }))
@@ -28,9 +31,7 @@ app.use('/owner', userRoomsRoute)
 
 // Connect to DB
 mongoose.connect(
-  process.env.NODE_ENV === 'production'
-    ? process.env.DB_CONNECTION
-    : 'mongodb+srv://usuarioteste:testeusuario@primeirocluster.vcadi.mongodb.net/lume-db',
+  DB_CONNECTION,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

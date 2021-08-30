@@ -89,13 +89,16 @@ export default {
     },
   },
 
-  // io: {
-  //   sockets: [
-  //     {
-  //       url: SOCKET_URL,
-  //     },
-  //   ],
-  // },
+  io: {
+    sockets: [
+      {
+        url:
+          process.env.NODE_ENV === 'production'
+            ? 'http://localhost:3000'
+            : 'http://localhost:3001',
+      },
+    ],
+  },
 
   toast: {
     theme: 'outline',
