@@ -108,7 +108,7 @@ export default {
   serverMiddleware:
     process.env.NODE_ENV === 'production'
       ? ['~/api/app.js']
-      : ['~/api/app.js', '~/api/ws.js'],
+      : ['~/api/app.js' /* '~/api/ws.js' */],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
