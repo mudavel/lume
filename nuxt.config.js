@@ -1,4 +1,4 @@
-import { BASE_URL, SERVER_MIDDLEWARE } from './config'
+import { BASE_URL, SERVER_MIDDLEWARE, SOCKET_URL } from './config'
 
 export default {
   loading: false,
@@ -91,7 +91,7 @@ export default {
   io: {
     sockets: [
       {
-        url: 'http://localhost:3001',
+        url: SOCKET_URL,
       },
     ],
   },
