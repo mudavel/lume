@@ -1,8 +1,6 @@
-import { BASE_URL, SERVER_MIDDLEWARE /* SOCKET_URL */ } from './config'
+import { BASE_URL, SERVER_MIDDLEWARE, SOCKET_URL } from './config'
 
 export default {
-  loading: false,
-
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
@@ -88,13 +86,13 @@ export default {
     },
   },
 
-  // io: {
-  //   sockets: [
-  //     {
-  //       url: SOCKET_URL,
-  //     },
-  //   ],
-  // },
+  io: {
+    sockets: [
+      {
+        url: SOCKET_URL,
+      },
+    ],
+  },
 
   toast: {
     theme: 'outline',
