@@ -4,8 +4,7 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
       "config": {
-        "serverFiles": ["api/**"],
-        "internalServer": "http://localhost:3000"
+        "serverFiles": ["api/**"]
       }
     }
   ]

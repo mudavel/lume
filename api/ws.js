@@ -43,6 +43,6 @@ io.on('connection', (socket) => {
   }
 })
 
-// if (process.env.NODE_ENV === 'production') server.listen(3000)
+if (process.env.NODE_ENV === 'production') server.listen(3000)
 
 export default { path: '/ws', handler: server }
