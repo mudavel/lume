@@ -1,4 +1,4 @@
-import { BASE_URL, SERVER_MIDDLEWARE, SOCKET_URL } from './config'
+import { BASE_URL, SERVER_MIDDLEWARE /* SOCKET_URL */ } from './config'
 
 export default {
   loading: false,
@@ -88,13 +88,13 @@ export default {
     },
   },
 
-  io: {
-    sockets: [
-      {
-        url: SOCKET_URL,
-      },
-    ],
-  },
+  // io: {
+  //   sockets: [
+  //     {
+  //       url: SOCKET_URL,
+  //     },
+  //   ],
+  // },
 
   toast: {
     theme: 'outline',
