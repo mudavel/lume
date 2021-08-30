@@ -1,10 +1,6 @@
 {
-  "routes": [
-    {
-      "src": "/api/app",
-      "dest": "/api/app.js"
-    }
-  ],
+  "version": 2,
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }],
   "builds": [
     {
       "src": "api/**/*.js",
@@ -14,7 +10,7 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
       "config": {
-        "serverFiles": ["api/**/*.js"]
+        "serverFiles": ["api/**"]
       }
     }
   ]

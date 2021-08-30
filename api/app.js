@@ -47,6 +47,8 @@ app.get('/', (req, res, next) => {
 // passport.serializeUser((user, done) => done(null, user.id))
 // passport.deserializeUser((id, done) => done(null, User.findById(id)))
 
-export default process.env.NODE_ENV === 'production'
-  ? app
-  : { path: '/api', handler: app }
+// export default process.env.NODE_ENV === 'production'
+//   ? app
+//   : { path: '/api', handler: app }
+
+export default { path: '/api', handler: app }

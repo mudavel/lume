@@ -4,7 +4,7 @@ const config =
         DB_CONNECTION: process.env.DB_CONNECTION,
         ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
         BASE_URL: 'https://lume.vercel.app',
-        SERVER_MIDDLEWARE: [],
+        SERVER_MIDDLEWARE: ['~/api/app.js'],
         SOCKET_URL: 'http://localhost:3000',
       }
     : {
