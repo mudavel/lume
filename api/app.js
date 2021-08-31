@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const DB_CONNECTION =
   process.env.NODE_ENV === 'production'
     ? process.env.DB_CONNECTION
-    : 'mongodb+srv://usuarioteste:testeusuario@primeirocluster.vcadi.mongodb.net/lume-db'
+    : 'mongodb+srv://Development123:IglzWD7g9QleTl0m@primeirocluster.vcadi.mongodb.net/lume-db'
 // const User = require('./model/User')
 
 app.use(express.urlencoded({ extended: true }))
@@ -36,6 +36,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    serverSelectionTimeoutMS: 5000,
   },
   (err) => {
     if (err) return console.log(`Couldn't connect to Database.\n${err}`)
