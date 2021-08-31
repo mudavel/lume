@@ -44,7 +44,7 @@ mongoose.connect(
 )
 
 app.get('/', (req, res, next) => {
-  res.send('api is working!')
+  res.send(`Mongoose connection: ${mongoose.connection.readyState}`)
 })
 
 // passport.serializeUser((user, done) => done(null, user.id))
