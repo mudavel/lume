@@ -62,11 +62,8 @@ router.post('/register', async (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
-  console.log('[debug] before try find user')
   try {
-    console.log('[DEBUG] find user 1')
     const user = await User.findOne({ email: req.body.email })
-    console.log('[DEBUG] find user 2')
     if (user) {
       if (!(await bcrypt.compare(req.body.password, user.password))) {
         return res.json({ message: 'Invalid email or password' })

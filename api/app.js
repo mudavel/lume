@@ -44,10 +44,6 @@ mongoose.connect(
   }
 )
 
-app.get('/', (req, res, next) => {
-  res.send(`Mongoose connection: ${mongoose.connection.readyState}`)
-})
-
 // passport.serializeUser((user, done) => done(null, user.id))
 // passport.deserializeUser((id, done) => done(null, User.findById(id)))
 

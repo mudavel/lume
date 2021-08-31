@@ -108,10 +108,7 @@ export default {
     singleton: true,
   },
 
-  serverMiddleware:
-    process.env.NODE_ENV === 'production'
-      ? ['~/api/app.js']
-      : ['~/api/app.js' /* '~/api/ws.js' */],
+  serverMiddleware: ['~/api/app.js', '~/api/ws.js'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

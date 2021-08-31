@@ -1,21 +1,26 @@
 <template>
   <div class="wrapper">
-    <h1>{{ response }}</h1>
+    <button @click="test">SEND SOCKET</button>
+    <h1>{{ res }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  auth: 'guest',
-  layout: 'guest',
   data() {
     return {
-      response: '',
+      res: '',
     }
   },
-  async mounted() {
-    const testRequest = await this.$axios.get('/api')
-    this.response = testRequest.data
+  mounted() {
+    this.socket = this.$nuxtSocket({})
+  },
+  methods: {
+    test() {
+      this.socket.emit('test', 'testmessage', (res) => {
+        this.res = res
+      })
+    },
   },
 }
 </script>

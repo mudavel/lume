@@ -34,6 +34,9 @@ function joinRoom(socket) {
 }
 
 io.on('connection', (socket) => {
+  socket.on('test', (msg, callback) => {
+    callback(msg)
+  })
   try {
     sendMessage(socket)
     joinRoom(socket)
