@@ -24,6 +24,8 @@
 
 <script>
 import Pusher from 'pusher-js'
+
+let pusher
 export default {
   props: {
     id: {
@@ -40,7 +42,7 @@ export default {
       isOwner: '',
     }
   },
-  async beforeMount() {
+  async mounted() {
     this.checkIfIsOwner()
 
     const PUSHER_KEY =
@@ -48,11 +50,16 @@ export default {
         ? process.env.PUSHER_KEY
         : require('~/config').PUSHER_KEY
 
-    this.pusher = new Pusher(PUSHER_KEY, {
+    console.log(
+      `%c PUSHER_KEY === undefined: ${PUSHER_KEY === undefined}`,
+      'color: green;background-color: yellow;font-size: 30px'
+    )
+
+    pusher = new Pusher(PUSHER_KEY, {
       cluster: 'us2',
     })
 
-    const room = this.pusher.subscribe(this.id)
+    const room = pusher.subscribe(this.id)
     room.bind('previous-messages', (messages) => {
       this.messages = messages
     })
@@ -79,7 +86,7 @@ export default {
 
         const sendData = {
           room_id: this.id,
-          socket_id: this.pusher.connection.socket_id,
+          socket_id: pusher.connection.socket_id,
           ...rawMessage,
         }
         await this.$axios.post('/api/pusher/send', sendData)
