@@ -29,7 +29,7 @@
     "nuxt": "^2.15.7",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "pusher": "^5.0.0",
+    "pusher": "github:mudavel/pusher-http-node",
     "pusher-js": "^7.0.3"
   },
   "devDependencies": {

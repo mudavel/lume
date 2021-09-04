@@ -24,7 +24,13 @@
 
 <script>
 import Pusher from 'pusher-js'
-const pusher = new Pusher('389a8d7c96b12eded195', {
+
+const PUSHER_KEY =
+  process.env.NODE_ENV === 'production'
+    ? process.env.PUSHER_KEY
+    : require('~/config').PUSHER_KEY
+
+const pusher = new Pusher(PUSHER_KEY, {
   cluster: 'us2',
 })
 
@@ -50,7 +56,9 @@ export default {
     room.bind('previous-messages', (messages) => {
       this.messages = messages
     })
-    await this.$axios.post('/api/previous-messages', { room_id: this.id })
+    await this.$axios.post('/api/pusher/previous-messages', {
+      room_id: this.id,
+    })
 
     room.bind('send-message', (message) => {
       this.messages.push(message)
@@ -74,7 +82,7 @@ export default {
           socket_id: pusher.connection.socket_id,
           ...rawMessage,
         }
-        await this.$axios.post('/api/send', sendData)
+        await this.$axios.post('/api/pusher/send', sendData)
       }
       this.message = ''
     },

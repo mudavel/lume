@@ -9,7 +9,7 @@ const User = require('../model/User')
 const ACCESS_TOKEN_SECRET =
   process.env.NODE_ENV === 'production'
     ? process.env.ACCESS_TOKEN_SECRET
-    : 'b475cc8573555862655c5eb196ddae4a350c860a9d8bcf0f45d6ed3890889f02e5c1bd290b2f48b0ac1c4554200b576443f1ddf61fb3e9bcc0c07c8e58c9bc29'
+    : require('../../config').ACCESS_TOKEN_SECRET
 
 passport.use(
   new JwtStrategy(
