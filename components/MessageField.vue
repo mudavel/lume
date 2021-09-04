@@ -24,6 +24,7 @@
 
 <script>
 import Pusher from 'pusher-js'
+Pusher.logToConsole = true
 
 const PUSHER_KEY =
   process.env.NODE_ENV === 'production'
