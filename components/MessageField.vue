@@ -3,7 +3,7 @@
     <NuxtLink to="/" class="to-home">Lume</NuxtLink>
     <p class="room-id" title="Copy chat ID" @click="toClipboard">{{ id }}</p>
     <div class="messages">
-      <div v-for="msg in messages" :key="msg.id" class="message">
+      <div v-for="msg in messages" :key="msg._id" class="message">
         <div v-if="!msg.isOwner" class="msg-username">{{ msg.username }}</div>
         <div v-else class="msg-username owner">{{ msg.username }}</div>
         <p class="msg-text">{{ msg.message }}</p>
@@ -23,6 +23,11 @@
 </template>
 
 <script>
+import Pusher from 'pusher-js'
+const pusher = new Pusher('389a8d7c96b12eded195', {
+  cluster: 'us2',
+})
+
 export default {
   props: {
     id: {
@@ -30,6 +35,7 @@ export default {
       default: 'global',
     },
   },
+
   data() {
     return {
       messages: [],
@@ -38,22 +44,23 @@ export default {
       isOwner: '',
     }
   },
-  mounted() {
+  async beforeMount() {
     this.checkIfIsOwner()
-    this.socket = this.$nuxtSocket({})
-    this.socket.emit('joinRoom', this.id)
-    this.socket.emit('previousMessages', this.id, (msgs) => {
-      this.messages = msgs
+    const room = pusher.subscribe(this.id)
+    room.bind('previous-messages', (messages) => {
+      this.messages = messages
     })
-    this.socket.on('broadcastMessage', (newMessage) => {
-      this.messages = [...this.messages, newMessage]
+    await this.$axios.post('/api/previous-messages', { room_id: this.id })
+
+    room.bind('send-message', (message) => {
+      this.messages.push(message)
     })
   },
   updated() {
     this.scrollDown()
   },
   methods: {
-    sendMessage() {
+    async sendMessage() {
       if (this.username.length && this.message.length) {
         const rawMessage = {
           username: this.username,
@@ -61,9 +68,13 @@ export default {
           room: this.id,
           isOwner: this.isOwner,
         }
-        this.socket.emit('sendMessage', rawMessage, (newMessage) => {
-          this.messages = [...this.messages, newMessage]
-        })
+
+        const sendData = {
+          room_id: this.id,
+          socket_id: pusher.connection.socket_id,
+          ...rawMessage,
+        }
+        await this.$axios.post('/api/send', sendData)
       }
       this.message = ''
     },

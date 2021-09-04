@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <h1>Lume, the best chat.</h1>
+    <h1>Lume</h1>
     <NuxtLink class="basic-button" to="/login">Login</NuxtLink>
     <NuxtLink class="basic-button" to="/register">Create account</NuxtLink>
   </div>

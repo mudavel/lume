@@ -1,13 +1,20 @@
-// import { BASE_URL, SERVER_MIDDLEWARE, SOCKET_URL } from './config'
-
 export default {
+  loading: false,
+
   router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'notFound',
-        path: '*',
-        component: resolve(__dirname, 'pages/404.vue'),
-      })
+    extendRoutes(routes) {
+      routes.push(
+        {
+          name: 'notFound',
+          path: '*',
+          component: '~/pages/404.vue',
+        },
+        {
+          name: 'API',
+          path: '/api/*',
+          component: '~/pages/api.vue',
+        }
+      )
     },
     middleware: ['auth'],
   },
@@ -36,14 +43,12 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ['@nuxtjs/eslint-module'],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/toast',
     '@nuxtjs/proxy',
-    'nuxt-socket-io',
   ],
 
   auth: {
@@ -87,17 +92,11 @@ export default {
     manifest: {
       lang: 'en',
     },
-  },
-
-  io: {
-    sockets: [
-      {
-        url:
-          process.env.NODE_ENV === 'production'
-            ? 'http://localhost:3001'
-            : 'http://localhost:3001',
-      },
-    ],
+    meta: {
+      name: 'Lume',
+      ogHost: 'https://lume.vercel.app',
+      ogImage: '~/static/icon.png',
+    },
   },
 
   toast: {
@@ -108,7 +107,7 @@ export default {
     singleton: true,
   },
 
-  serverMiddleware: ['~/api/app.js', '~/api/ws.js'],
+  serverMiddleware: ['~/api/app.js' /* '~/api/ws.js' */],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

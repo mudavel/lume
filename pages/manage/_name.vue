@@ -5,7 +5,7 @@
       <h2>Manage users</h2>
       <form @submit.prevent="addToWhitelist">
         <input
-          v-model="whitelistUsername"
+          v-model="includeUsername"
           type="text"
           placeholder="Username"
           required
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       roomName: this.$route.params.name,
-      whitelistUsername: '',
+      includeUsername: '',
     }
   },
   head() {
@@ -37,16 +37,17 @@ export default {
   },
   methods: {
     async addToWhitelist() {
-      const user = await this.$axios.get(`/api/user/${this.whitelistUsername}`)
+      const user = await this.$axios.get(`/api/user/${this.includeUsername}`)
       if (!user.data.username) return this.$toast.info('User not found.')
 
       const username = user.data.username
 
       const room = await this.$axios.get(`/api/room/${this.roomName}`)
       if (room.data.allowed_users.includes(username))
-        return this.$toast.info(`${username} is already in the whitelist.`)
+        return this.$toast.info(`${username} is already included.`)
 
       await this.$axios.patch(`/api/room/${this.roomName}`, { username })
+      this.$toast.success(`${username} was included!`)
     },
   },
 }
