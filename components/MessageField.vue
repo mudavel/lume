@@ -76,6 +76,10 @@ export default {
   },
   methods: {
     async sendMessage() {
+      console.log(
+        `%c PUSHER_KEY === undefined: ${process.env.PUSHER_KEY === undefined}`,
+        'color: green;background-color: yellow;font-size: 30px'
+      )
       if (this.username.length && this.message.length) {
         const rawMessage = {
           username: this.username,
