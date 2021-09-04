@@ -30,14 +30,12 @@ export default {
   },
   methods: {
     async validateLogin() {
-      console.log(`Authenticated 1: ${this.$auth.loggedIn}`)
       await this.$auth.loginWith('local', {
         data: {
           email: this.email,
           password: this.password,
         },
       })
-      console.log(`Authenticated 2: ${this.$auth.loggedIn}`)
       if (this.$auth.loggedIn) {
         await window.$nuxt.$router.push('/dashboard')
       }

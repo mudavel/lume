@@ -24,12 +24,13 @@
 
 <script>
 import Pusher from 'pusher-js'
-Pusher.logToConsole = true
 
 const PUSHER_KEY =
   process.env.NODE_ENV === 'production'
     ? process.env.PUSHER_KEY
     : require('~/config').PUSHER_KEY
+
+console.log(process.env.PUSHER_KEY === undefined)
 
 const pusher = new Pusher(PUSHER_KEY, {
   cluster: 'us2',
