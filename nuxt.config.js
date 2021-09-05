@@ -19,7 +19,6 @@ export default {
     middleware: ['auth'],
   },
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Lume',
     meta: [
@@ -40,7 +39,6 @@ export default {
 
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ['@nuxtjs/eslint-module'],
 
   modules: [
@@ -80,7 +78,6 @@ export default {
     },
   },
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL:
       process.env.NODE_ENV === 'production'
@@ -108,7 +105,11 @@ export default {
     singleton: true,
   },
 
-  serverMiddleware: ['~/api/app.js' /* '~/api/ws.js' */],
+  privateRuntimeConfig: {
+    PUSHER_KEY: '389a8d7c96b12eded195',
+  },
+
+  serverMiddleware: ['~/api/app.js'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

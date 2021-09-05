@@ -33,29 +33,22 @@ export default {
       default: 'global',
     },
   },
-
   data() {
     return {
       messages: [],
       message: '',
       username: this.$auth.user.username,
       isOwner: '',
+      PUSHER_KEY: '',
     }
   },
-  async mounted() {
+  fetch() {
+    this.PUSHER_KEY = this.$config.PUSHER_KEY
+  },
+  async beforeMount() {
     this.checkIfIsOwner()
 
-    const PUSHER_KEY =
-      process.env.NODE_ENV === 'production'
-        ? process.env.PUSHER_KEY
-        : require('~/config').PUSHER_KEY
-
-    console.log(
-      `%c PUSHER_KEY === undefined: ${PUSHER_KEY === undefined}`,
-      'color: green;background-color: yellow;font-size: 30px'
-    )
-
-    pusher = new Pusher(PUSHER_KEY, {
+    pusher = new Pusher(this.PUSHER_KEY, {
       cluster: 'us2',
     })
 
@@ -76,10 +69,6 @@ export default {
   },
   methods: {
     async sendMessage() {
-      console.log(
-        `%c PUSHER_KEY === undefined: ${process.env.PUSHER_KEY === undefined}`,
-        'color: green;background-color: yellow;font-size: 30px'
-      )
       if (this.username.length && this.message.length) {
         const rawMessage = {
           username: this.username,
