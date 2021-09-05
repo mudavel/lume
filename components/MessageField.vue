@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <NuxtLink to="/" class="to-home">Lume</NuxtLink>
+    <NuxtLink to="/" class="nuxt-link-text">Lume</NuxtLink>
     <p class="room-id" title="Copy chat ID" @click="toClipboard">{{ id }}</p>
     <div class="messages">
       <div v-for="msg in messages" :key="msg._id" class="message">

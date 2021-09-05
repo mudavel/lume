@@ -46,7 +46,6 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/toast',
-    '@nuxtjs/proxy',
   ],
 
   auth: {

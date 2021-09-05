@@ -1,6 +1,10 @@
 <template>
   <div class="wrapper">
-    <h1>{{ roomName }}</h1>
+    <NuxtLink
+      :to="'/chat/' + roomName"
+      class="nuxt-link-active nuxt-link-text"
+      >{{ roomName }}</NuxtLink
+    >
     <div class="manage-whitelist">
       <h2>Manage users</h2>
       <form @submit.prevent="addToWhitelist">
@@ -32,7 +36,7 @@ export default {
   },
   head() {
     return {
-      title: `Lume: ${this.roomName}`,
+      title: `Managing ${this.roomName}`,
     }
   },
   methods: {
@@ -71,4 +75,7 @@ form
 h2
   font-weight: normal
   margin-bottom: 6%
+
+a.nuxt-link-active
+  margin-bottom: 3%
 </style>

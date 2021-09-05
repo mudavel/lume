@@ -3,11 +3,10 @@ import mongoose from 'mongoose'
 
 const app = express()
 const DB_CONNECTION =
-  process.env.NODE_ENV === 'production'
-    ? process.env.DB_CONNECTION
-    : `mongodb+srv://Development123:${
-        require('../config').MONGO_PASSWORD
-      }@primeirocluster.vcadi.mongodb.net/lume-db`
+  process.env.DB_CONNECTION ||
+  `mongodb+srv://Development123:${
+    require('../config').MONGO_PASSWORD
+  }@primeirocluster.vcadi.mongodb.net/lume-db`
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
