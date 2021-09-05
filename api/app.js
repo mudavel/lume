@@ -3,10 +3,7 @@ import mongoose from 'mongoose'
 
 const app = express()
 const DB_CONNECTION =
-  process.env.DB_CONNECTION ||
-  `mongodb+srv://Development123:${
-    require('../config').MONGO_PASSWORD
-  }@primeirocluster.vcadi.mongodb.net/lume-db`
+  process.env.DB_CONNECTION || require('../config').DB_CONNECTION
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -27,11 +24,10 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 9000,
   },
   (err) => {
-    if (err) return console.log(`Couldn't connect to Database.\n${err}`)
-    console.log('Connected to Database.')
+    if (err) console.log(`Couldn't connect to Database.\n${err}`)
   }
 )
 

@@ -7,6 +7,9 @@
       placeholder="Username"
       required
     />
+    <nuxt-link class="secondary-link" to="docs/creating-accounts"
+      >Learn More</nuxt-link
+    >
     <input
       v-model="email"
       type="email"
@@ -36,12 +39,18 @@ export default {
   },
   methods: {
     async createAccount() {
+      if (this.hasInvalidCharacters(this.username))
+        return this.$toast.error('Invalid username!')
       await this.$axios.post('/api/auth/register', {
         username: this.username,
         email: this.email,
         password: this.password,
       })
       window.$nuxt.$router.push(`/login`)
+    },
+    hasInvalidCharacters(str) {
+      const validCharacters = /^[0-9a-zA-Z_.]+$/
+      if (!validCharacters.test(str)) return true
     },
   },
 }

@@ -28,8 +28,4 @@ export default {
 }
 </script>
 
-<style
-  lang="sass"
-  scoped
-  src="~/assets/css/file-specific/dashboard.sass"
-></style>
+<style lang="sass" scoped src="~/assets/css/scoped/dashboard.sass"></style>

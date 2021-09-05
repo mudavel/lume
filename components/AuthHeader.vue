@@ -1,11 +1,5 @@
 <template>
   <header class="page-header">
-    <img
-      src="~/static/back.svg"
-      alt="Go back"
-      class="go-back-image header-part"
-      @click="toHomePage"
-    />
     <div class="profile header-part">
       <div class="email" @click="showLogout">{{ $auth.user.email }}</div>
       <div class="blocker" @click="hideLogout"></div>
@@ -17,13 +11,8 @@
 <script>
 export default {
   methods: {
-    async toHomePage() {
-      await window.$nuxt.$router.push('/')
-    },
     async logout() {
       await this.$auth.logout()
-      await window.$nuxt.$router.push('/logout')
-      // await window.$nuxt.$router.push('/login') // MUDAR PRA ISSO (TALVEZ)
     },
     showLogout() {
       document.querySelector('.blocker').style.display = 'block'
@@ -37,4 +26,4 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped src="~/assets/css/file-specific/header.sass"></style>
+<style lang="sass" scoped src="~/assets/css/scoped/header.sass"></style>

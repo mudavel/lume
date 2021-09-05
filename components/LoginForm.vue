@@ -36,9 +36,8 @@ export default {
           password: this.password,
         },
       })
-      if (this.$auth.loggedIn) {
-        await window.$nuxt.$router.push('/dashboard')
-      }
+      if (this.$auth.loggedIn) return
+      this.$toast.error("Email and password don't match.")
     },
   },
 }

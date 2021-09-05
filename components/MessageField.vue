@@ -98,4 +98,4 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped src="~/assets/css/file-specific/message-field.sass" />
+<style lang="sass" scoped src="~/assets/css/scoped/message-field.sass" />

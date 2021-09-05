@@ -7,9 +7,7 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const User = require('../model/User')
 const ACCESS_TOKEN_SECRET =
-  process.env.NODE_ENV === 'production'
-    ? process.env.ACCESS_TOKEN_SECRET
-    : require('../../config').ACCESS_TOKEN_SECRET
+  process.env.ACCESS_TOKEN_SECRET || require('../../config').ACCESS_TOKEN_SECRET
 
 passport.use(
   new JwtStrategy(
