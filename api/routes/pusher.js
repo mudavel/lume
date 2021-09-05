@@ -3,12 +3,17 @@ import express from 'express'
 import Message from '../model/Message'
 const router = express.Router()
 
-const pusher = new Pusher({
-  app_id: '1259228',
-  key: '389a8d7c96b12eded195',
-  secret: 'f90f74fb36496ebe82ae',
-  cluster: 'us2',
-})
+const pusherSecrets =
+  process.env.NODE_ENV === 'production'
+    ? {
+        app_id: process.env.PUSHER_ID,
+        key: process.env.PUSHER_KEY,
+        secret: process.env.PUSHER_SECRET,
+        cluster: process.env.PUSHER_CLUSTER,
+      }
+    : require('../../config').PUSHER_SECRETS
+
+const pusher = new Pusher(pusherSecrets)
 
 router.post('/previous-messages', async (req, res, next) => {
   const messages = await Message.find({ room: req.body.room_id })
