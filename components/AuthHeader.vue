@@ -13,6 +13,7 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout()
+      await window.$nuxt.$router.push('/login')
     },
     showLogout() {
       document.querySelector('.blocker').style.display = 'block'

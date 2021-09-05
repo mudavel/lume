@@ -6,7 +6,7 @@
         >a-z, A-Z, 0-9</code
       >) and the following special characters: <code>_ .</code>.
     </p>
-    <NuxtLink class="basic-button" to="/create"
+    <NuxtLink v-if="!$auth.loggedIn" class="basic-button" to="/register"
       >I'm ready to create my Lume account!</NuxtLink
     >
   </div>
@@ -15,5 +15,8 @@
 <script>
 export default {
   auth: false,
+  layout({ $auth }) {
+    return $auth.loggedIn ? 'default' : 'guest'
+  },
 }
 </script>
