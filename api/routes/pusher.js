@@ -22,17 +22,16 @@ router.post('/previous-messages', async (req, res, next) => {
 })
 
 router.post('/send', async (req, res, next) => {
-  const message = new Message({
-    username: req.body.username,
-    message: req.body.message,
-    room: req.body.room,
-    isOwner: req.body.isOwner,
-  })
-
   try {
-    const savedMessage = await message.save()
-    pusher.trigger(req.body.room_id, 'send-message', savedMessage)
-    res.send('Message sent')
+    const message = await new Message({
+      username: req.body.username,
+      message: req.body.message,
+      room: req.body.room,
+      isOwner: req.body.isOwner,
+    }).save()
+
+    pusher.trigger(req.body.room_id, 'send', message)
+    res.send(`"${req.body.message}" was sent.`)
   } catch (err) {
     console.log(err)
   }

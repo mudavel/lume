@@ -60,7 +60,7 @@ export default {
       room_id: this.id,
     })
 
-    room.bind('send-message', (message) => {
+    room.bind('send', (message) => {
       this.messages.push(message)
     })
   },
@@ -69,22 +69,19 @@ export default {
   },
   methods: {
     async sendMessage() {
-      if (this.username.length && this.message.length) {
-        const rawMessage = {
+      const messageContent = this.message
+      if (messageContent.trim()) {
+        this.message = ''
+        const data = {
+          room_id: this.id,
+          socket_id: pusher.connection.socket_id,
           username: this.username,
-          message: this.message,
+          message: messageContent,
           room: this.id,
           isOwner: this.isOwner,
         }
-
-        const sendData = {
-          room_id: this.id,
-          socket_id: pusher.connection.socket_id,
-          ...rawMessage,
-        }
-        await this.$axios.post('/api/pusher/send', sendData)
+        await this.$axios.post('/api/pusher/send', data)
       }
-      this.message = ''
     },
     scrollDown() {
       const getElement = document.querySelector('.messages')

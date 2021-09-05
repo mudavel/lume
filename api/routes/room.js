@@ -5,7 +5,7 @@ const User = require('../model/User')
 router.get('/:name', async (req, res, next) => {
   try {
     const room = await Room.findOne({ fancy_name: req.params.name })
-    if (!room) return res.json({ message: 'room does not exist' })
+    if (!room) return res.json({ message: 'room not found' })
     res.json({
       _id: room._id,
       allowed_users: room.allowed_users,
