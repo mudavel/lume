@@ -5,7 +5,7 @@ const router = express.Router()
 router.post('/', async (req, res, next) => {
   try {
     if (!!(await Room.findOne({ fancy_name: req.body.name })))
-      return res.json({ message: `${req.body.name} is already used` })
+      return res.json({ message: `${req.body.name} already exists` })
     const room = new Room({
       owner: req.body.owner,
       fancy_name: req.body.name,

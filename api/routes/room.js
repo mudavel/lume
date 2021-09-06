@@ -4,6 +4,7 @@ const User = require('../model/User')
 
 router.get('/:name', async (req, res, next) => {
   try {
+    console.log(`[DEBUG]\nreq.hostname: ${req.hostname}\n[DEBUG]`)
     const room = await Room.findOne({ fancy_name: req.params.name })
     if (!room) return res.redirect('/')
     res.json({

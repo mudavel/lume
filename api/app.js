@@ -9,7 +9,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Route Middlewares
-app.use('/messages', require('./routes/messages'))
 app.use('/newroom', require('./routes/new-room'))
 app.use('/auth', require('./routes/auth'))
 app.use('/room', require('./routes/room'))
