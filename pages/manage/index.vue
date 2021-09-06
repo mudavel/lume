@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper">
-    <h1>Your Rooms</h1>
+    <h1>
+      <NuxtLink to="/" class="nuxt-link-title">Lume</NuxtLink> - Your Rooms
+    </h1>
     <div class="rooms">
       <NuxtLink
         v-for="room of rooms"

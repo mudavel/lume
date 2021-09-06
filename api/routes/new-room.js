@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
     })
     const savedRoom = await room.save()
     const id = savedRoom._id.toString()
-    res.json({ id: id })
+    res.json({ id })
   } catch (err) {
     console.log(err)
   }

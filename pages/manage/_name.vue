@@ -1,10 +1,12 @@
 <template>
   <div class="wrapper">
-    <NuxtLink
-      :to="'/chat/' + roomName"
-      class="nuxt-link-active nuxt-link-text"
-      >{{ roomName }}</NuxtLink
-    >
+    <h1>
+      <NuxtLink
+        :to="'/chat/' + roomName"
+        class="nuxt-link-active nuxt-link-title"
+        >{{ roomName }}</NuxtLink
+      >
+    </h1>
     <div class="manage-whitelist">
       <h2>Manage users</h2>
       <form @submit.prevent="addToWhitelist">
@@ -41,10 +43,11 @@ export default {
   },
   methods: {
     async addToWhitelist() {
-      const user = await this.$axios.get(`/api/user/${this.includeUsername}`)
-      if (!user.data.username) return this.$toast.info('User not found.')
-
-      const username = user.data.username
+      const username = this.includeUsername
+      const user = await this.$axios.get(
+        `/api/userexists/${this.includeUsername}`
+      )
+      if (!user.data) return this.$toast.info('User not found.')
 
       const room = await this.$axios.get(`/api/room/${this.roomName}`)
       if (room.data.allowed_users.includes(username))

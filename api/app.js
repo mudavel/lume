@@ -13,9 +13,10 @@ app.use('/messages', require('./routes/messages'))
 app.use('/newroom', require('./routes/new-room'))
 app.use('/auth', require('./routes/auth'))
 app.use('/room', require('./routes/room'))
-app.use('/user', require('./routes/user'))
+app.use('/userexists', require('./routes/userexists'))
 app.use('/owner', require('./routes/owner'))
 app.use('/pusher', require('./routes/pusher'))
+app.use('/previous', require('./routes/previous'))
 
 // Connect to DB
 mongoose.connect(

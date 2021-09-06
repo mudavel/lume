@@ -1,3 +1,5 @@
+import { sortRoutes } from '@nuxt/utils'
+
 export default {
   loading: false,
 
@@ -10,13 +12,14 @@ export default {
           component: '~/pages/404.vue',
         },
         {
-          name: 'API',
+          name: 'noAPI',
           path: '/api/*',
           component: '~/pages/api.vue',
         }
       )
+      sortRoutes(routes)
     },
-    middleware: ['auth'],
+    middleware: ['auth', 'protect-api'],
   },
 
   head: {

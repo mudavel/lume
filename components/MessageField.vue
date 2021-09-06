@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <NuxtLink to="/" class="nuxt-link-text">Lume</NuxtLink>
+    <h1><NuxtLink to="/" class="nuxt-link-title">Lume</NuxtLink></h1>
     <p class="room-id" title="Copy chat ID" @click="toClipboard">{{ id }}</p>
     <div class="messages">
       <div v-for="msg in messages" :key="msg._id" class="message">
@@ -45,6 +45,14 @@ export default {
   fetch() {
     this.PUSHER_KEY = this.$config.PUSHER_KEY
   },
+  watch: {
+    messages() {
+      this.$nextTick(() => {
+        const element = document.querySelector('.messages')
+        element.scrollTo(0, element.scrollHeight)
+      })
+    },
+  },
   async beforeMount() {
     this.checkIfIsOwner()
 
@@ -53,19 +61,12 @@ export default {
     })
 
     const room = pusher.subscribe(this.id)
-    room.bind('previous-messages', (messages) => {
-      this.messages = messages
-    })
-    await this.$axios.post('/api/pusher/previous-messages', {
-      room_id: this.id,
-    })
-
     room.bind('send', (message) => {
       this.messages.push(message)
     })
-  },
-  updated() {
-    this.scrollDown()
+
+    const previousMessages = await this.$axios.get(`/api/previous/${this.id}`)
+    this.messages = previousMessages.data
   },
   methods: {
     async sendMessage() {
@@ -82,10 +83,6 @@ export default {
         }
         await this.$axios.post('/api/pusher/send', data)
       }
-    },
-    scrollDown() {
-      const getElement = document.querySelector('.messages')
-      getElement.scrollTo(0, getElement.scrollHeight)
     },
     toClipboard() {
       navigator.clipboard.writeText(this.id)

@@ -16,12 +16,6 @@ const pusherSecrets = {
 
 const pusher = new Pusher(pusherSecrets)
 
-router.post('/previous-messages', async (req, res, next) => {
-  const messages = await Message.find({ room: req.body.room_id })
-  pusher.trigger(req.body.room_id, 'previous-messages', messages)
-  res.status(200).send('Previous messages sent!')
-})
-
 router.post('/send', async (req, res, next) => {
   try {
     const message = await new Message({
@@ -32,7 +26,7 @@ router.post('/send', async (req, res, next) => {
     }).save()
 
     pusher.trigger(req.body.room_id, 'send', message)
-    res.send(`"${req.body.message}" was sent.`)
+    res.send(message)
   } catch (err) {
     console.log(err)
   }
