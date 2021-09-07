@@ -71,7 +71,7 @@ router.post('/login', async (req, res, next) => {
 
       res.json({ token: accessToken })
     } else {
-      res.json({ message: 'User not found' })
+      res.json({ message: 'Invalid email or password' })
     }
   } catch (err) {
     console.log(`[DEBUG: ERROR START]\n${err}\n[DEBUG: ERROR END]`)
