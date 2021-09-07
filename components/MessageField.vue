@@ -65,7 +65,7 @@ export default {
       this.messages.push(message)
     })
 
-    const previousMessages = await this.$axios.get(`/api/previous/${this.id}`)
+    const previousMessages = await this.$axios.post(`/api/previous/${this.id}`)
     this.messages = previousMessages.data
   },
   methods: {
@@ -88,7 +88,7 @@ export default {
       navigator.clipboard.writeText(this.id)
     },
     async checkIfIsOwner() {
-      const room = await this.$axios.get(`/api/room/${this.id}`)
+      const room = await this.$axios.post(`/api/room/${this.id}`)
       this.isOwner = room.data.owner === this.$auth.user.username
     },
   },

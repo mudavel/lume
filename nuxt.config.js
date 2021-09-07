@@ -19,7 +19,7 @@ export default {
       )
       sortRoutes(routes)
     },
-    middleware: ['auth', 'protect-api'],
+    middleware: ['auth'],
   },
 
   head: {
@@ -113,6 +113,5 @@ export default {
 
   serverMiddleware: ['~/api/app.js'],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }

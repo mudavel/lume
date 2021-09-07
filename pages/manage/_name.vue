@@ -25,7 +25,7 @@
 <script>
 export default {
   async middleware({ $auth, $axios, redirect, route }) {
-    const room = await $axios.get(`/api/room/${route.params.name}`)
+    const room = await $axios.post(`/api/room/${route.params.name}`)
     const owner = room.data.owner
     const username = $auth.$state.user.username
     if (!(owner === username)) return redirect('/')
@@ -44,12 +44,12 @@ export default {
   methods: {
     async addToWhitelist() {
       const username = this.includeUsername
-      const user = await this.$axios.get(
+      const user = await this.$axios.post(
         `/api/userexists/${this.includeUsername}`
       )
       if (!user.data) return this.$toast.info('User not found.')
 
-      const room = await this.$axios.get(`/api/room/${this.roomName}`)
+      const room = await this.$axios.post(`/api/room/${this.roomName}`)
       if (room.data.allowed_users.includes(username))
         return this.$toast.info(`${username} is already included.`)
 

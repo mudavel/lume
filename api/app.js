@@ -8,7 +8,6 @@ const DB_CONNECTION =
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-// Route Middlewares
 app.use('/newroom', require('./routes/new-room'))
 app.use('/auth', require('./routes/auth'))
 app.use('/room', require('./routes/room'))
@@ -17,7 +16,6 @@ app.use('/owner', require('./routes/owner'))
 app.use('/pusher', require('./routes/pusher'))
 app.use('/previous', require('./routes/previous'))
 
-// Connect to DB
 mongoose.connect(
   DB_CONNECTION,
   {

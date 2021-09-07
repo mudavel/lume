@@ -2,9 +2,11 @@ const router = require('express').Router()
 const Room = require('../model/Room')
 const User = require('../model/User')
 
-router.get('/:name', async (req, res, next) => {
+router.post('/:name', async (req, res, next) => {
   try {
-    console.log(`[DEBUG]\nreq.hostname: ${req.hostname}\n[DEBUG]`)
+    if (req.originalUrl.includes('?'))
+      return res.redirect(req.originalUrl.split('?').shift())
+
     const room = await Room.findOne({ fancy_name: req.params.name })
     if (!room) return res.redirect('/')
     res.json({
