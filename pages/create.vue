@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper">
-    <h1>Create Room</h1>
+    <h1>
+      <NuxtLink to="/" class="nuxt-link-title">Lume</NuxtLink> - Create Room
+    </h1>
     <form @submit.prevent="createRoom">
       <input v-model="name" type="text" placeholder="Room name" required />
       <NuxtLink class="secondary-link" to="/docs/creating-rooms"

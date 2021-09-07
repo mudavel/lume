@@ -2,14 +2,15 @@ import express from 'express'
 import mongoose from 'mongoose'
 
 const app = express()
-const DB_CONNECTION =
-  process.env.DB_CONNECTION || require('../config').DB_CONNECTION
-
-const CURRENT_URL = process.env.CURRENT_URL || require('../config').CURRENT_URL
+const { DB_CONNECTION, CURRENT_URL } = require('../config') || process.env
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(require('cors')({ origin: CURRENT_URL }))
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', CURRENT_URL)
+
+  next()
+})
 
 app.use('/newroom', require('./routes/new-room'))
 app.use('/auth', require('./routes/auth'))
