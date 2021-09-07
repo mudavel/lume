@@ -5,8 +5,11 @@ const app = express()
 const DB_CONNECTION =
   process.env.DB_CONNECTION || require('../config').DB_CONNECTION
 
+const CURRENT_URL = process.env.CURRENT_URL || require('../config').CURRENT_URL
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(require('cors')({ origin: CURRENT_URL }))
 
 app.use('/newroom', require('./routes/new-room'))
 app.use('/auth', require('./routes/auth'))
