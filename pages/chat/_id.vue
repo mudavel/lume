@@ -4,10 +4,10 @@
 
 <script>
 export default {
-  async middleware({ $auth, $axios, $config, redirect, route }) {
-    const room = await $axios.post(`/api/room/${route.params.id}`)
-    if (!room.data.allowed_users) return redirect('/')
-    const whitelist = room.data.allowed_users
+  async middleware({ $auth, $http, $config, redirect, route }) {
+    const room = await $http.$post(`/api/room/${route.params.id}`)
+    if (!room.allowed_users) return redirect('/')
+    const whitelist = room.allowed_users
     const username = $auth.$state.user.username
     if (!whitelist.includes(username)) return redirect('/')
   },

@@ -24,10 +24,10 @@ export default {
     }
   },
   async fetch() {
-    const rooms = await this.$axios.get(
+    const rooms = await this.$http.$post(
       `/api/owner/${this.$auth.user.username}`
     )
-    this.rooms = rooms.data
+    this.rooms = rooms
   },
 }
 </script>

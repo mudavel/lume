@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const MessageSchema = Schema({
-  username: {
+  sender: {
     type: String,
     required: true,
   },
-  message: {
+  content: {
     type: String,
     required: true,
   },

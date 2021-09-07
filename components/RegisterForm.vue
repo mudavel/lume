@@ -39,14 +39,26 @@ export default {
   },
   methods: {
     async createAccount() {
-      if (this.hasInvalidCharacters(this.username))
-        return this.$toast.error('Invalid username!')
-      await this.$axios.post('/api/auth/register', {
-        username: this.username,
-        email: this.email,
+      const username = this.username
+      const email = this.email
+
+      if (!(await this.isValid(username, email)))
+        return this.$toast.error('Invalid username or email.')
+
+      await this.$http.$post('/api/auth/register', {
+        username,
+        email,
         password: this.password,
       })
       window.$nuxt.$router.push(`/login`)
+    },
+    async isValid(username, email) {
+      if (this.hasInvalidCharacters(username)) return
+
+      if (await this.$http.$post(`/api/exists/username/${username}`)) return
+
+      if (await this.$http.$post(`/api/exists/email/${email}`)) return
+      return true
     },
     hasInvalidCharacters(str) {
       const validCharacters = /^[0-9a-zA-Z_.]+$/

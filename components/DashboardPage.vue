@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <h1>
-      Welcome back, <b>{{ $auth.user.username }}</b
+      Welcome, <b>{{ $auth.user.username }}</b
       >!
     </h1>
     <div class="actions">
@@ -19,10 +19,10 @@
 export default {
   methods: {
     async createRoom() {
-      const newRoom = await this.$axios.post('/api/newroom', {
+      const newRoom = await this.$http.$post('/api/newroom', {
         username: this.$auth.user.username,
       })
-      await window.$nuxt.$router.push(`/chat/${newRoom.data.id}`)
+      await window.$nuxt.$router.push(`/chat/${newRoom.id}`)
     },
   },
 }

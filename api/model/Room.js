@@ -13,6 +13,7 @@ const RoomSchema = Schema({
   fancy_name: {
     type: String,
     required: true,
+    unique: true,
   },
   allowed_users: {
     type: [String],

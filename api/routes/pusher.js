@@ -19,8 +19,8 @@ const pusher = new Pusher(pusherSecrets)
 router.post('/send', async (req, res, next) => {
   try {
     const message = await new Message({
-      username: req.body.username,
-      message: req.body.message,
+      sender: req.body.sender,
+      content: req.body.content,
       room: req.body.room,
       isOwner: req.body.isOwner,
     }).save()

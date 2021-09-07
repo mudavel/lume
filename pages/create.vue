@@ -25,11 +25,11 @@ export default {
       const name = this.name
       if (this.hasInvalidCharacters(name))
         return this.$toast.error('Invalid name!')
-      const newRoom = await this.$axios.post('/api/newroom', {
+      const newRoom = await this.$http.$post('/api/newroom', {
         owner: this.$auth.user.username,
         name,
       })
-      if (newRoom.data.id) {
+      if (newRoom.id) {
         return await window.$nuxt.$router.push(`/chat/${name}`)
       }
       this.$toast.error(

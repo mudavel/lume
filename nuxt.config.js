@@ -1,5 +1,7 @@
 import { sortRoutes } from '@nuxt/utils'
 
+const BASE_URL = require('./config').BASE_URL || 'https://lume.vercel.app'
+
 export default {
   loading: false,
 
@@ -43,9 +45,10 @@ export default {
   buildModules: ['@nuxtjs/eslint-module'],
 
   modules: [
+    '@nuxt/http',
+    '@nuxtjs/auth-next',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
     '@nuxtjs/toast',
   ],
 
@@ -74,11 +77,12 @@ export default {
     },
   },
 
+  http: {
+    baseURL: BASE_URL,
+  },
+
   axios: {
-    baseURL:
-      process.env.NODE_ENV === 'production'
-        ? 'https://lume.vercel.app'
-        : 'http://localhost:3000',
+    baseURL: BASE_URL,
   },
 
   pwa: {

@@ -24,9 +24,9 @@
 
 <script>
 export default {
-  async middleware({ $auth, $axios, redirect, route }) {
-    const room = await $axios.post(`/api/room/${route.params.name}`)
-    const owner = room.data.owner
+  async middleware({ $auth, $http, redirect, route }) {
+    const room = await $http.$post(`/api/room/${route.params.name}`)
+    const owner = room.owner
     const username = $auth.$state.user.username
     if (!(owner === username)) return redirect('/')
   },
@@ -44,16 +44,16 @@ export default {
   methods: {
     async addToWhitelist() {
       const username = this.includeUsername
-      const user = await this.$axios.post(
-        `/api/userexists/${this.includeUsername}`
+      const user = await this.$http.$post(
+        `/api/exists/username/${this.includeUsername}`
       )
-      if (!user.data) return this.$toast.info('User not found.')
+      if (!user) return this.$toast.info('User not found.')
 
-      const room = await this.$axios.post(`/api/room/${this.roomName}`)
-      if (room.data.allowed_users.includes(username))
+      const room = await this.$http.$post(`/api/room/${this.roomName}`)
+      if (room.allowed_users.includes(username))
         return this.$toast.info(`${username} is already included.`)
 
-      await this.$axios.patch(`/api/room/${this.roomName}`, { username })
+      await this.$http.$patch(`/api/room/${this.roomName}`, { username })
       this.$toast.success(`${username} was included!`)
     },
   },
