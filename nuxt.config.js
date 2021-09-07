@@ -38,8 +38,6 @@ export default {
     '~/assets/css/global/templates',
   ],
 
-  plugins: [],
-
   components: true,
 
   buildModules: ['@nuxtjs/eslint-module'],
@@ -70,11 +68,7 @@ export default {
             method: 'get',
             propertyName: 'user',
           },
-          logout: {
-            url: 'api/auth/logout',
-            method: 'get',
-            propertyName: '',
-          },
+          logout: false,
         },
       },
     },

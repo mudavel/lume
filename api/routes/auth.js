@@ -47,13 +47,12 @@ router.get(
 router.post('/register', async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    const newUser = new User({
+    const user = await new User({
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
-    })
-    const savedUser = await newUser.save()
-    res.send(savedUser)
+    }).save()
+    res.send(user)
   } catch (err) {
     res.status(400).send(err)
   }
@@ -74,12 +73,8 @@ router.post('/login', async (req, res, next) => {
       res.json({ message: 'Invalid email or password' })
     }
   } catch (err) {
-    console.log(`[DEBUG: ERROR START]\n${err}\n[DEBUG: ERROR END]`)
+    console.log(`[DEBUG]\n${err}\n[DEBUG]`)
   }
-})
-
-router.get('/logout', (req, res, next) => {
-  res.json({ message: 'logged out' })
 })
 
 module.exports = router
