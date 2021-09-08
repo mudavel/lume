@@ -95,7 +95,7 @@ export default {
           room: this.id,
           isOwner: this.isOwner,
         }
-        await this.$http.$post('/api/pusher/send', data)
+        await this.$http.$post('/api/send', data)
       }
     },
     toClipboard() {

@@ -44,39 +44,6 @@ router.get(
   }
 )
 
-// router.post('/register', async (req, res, next) => {
-//   try {
-//     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-//     const user = await new User({
-//       username: req.body.username,
-//       email: req.body.email,
-//       password: hashedPassword,
-//     }).save()
-//     res.send(user)
-//   } catch (err) {
-//     res.status(400).send(err)
-//   }
-// })
-
-// router.post('/login', async (req, res, next) => {
-//   try {
-//     const user = await User.findOne({ email: req.body.email })
-//     if (user) {
-//       if (!(await bcrypt.compare(req.body.password, user.password))) {
-//         return res.json({ message: 'Invalid email or password' })
-//       }
-//       const jwtPayload = { _id: user._id, email: user.email }
-//       const accessToken = jwt.sign(jwtPayload, ACCESS_TOKEN_SECRET)
-
-//       res.json({ token: accessToken })
-//     } else {
-//       res.json({ message: 'Invalid email or password' })
-//     }
-//   } catch (err) {
-//     console.log(`[DEBUG]\n${err}\n[DEBUG]`)
-//   }
-// })
-
 router.post('/:login_or_register', async (req, res, next) => {
   if (req.params.login_or_register === 'register') {
     try {
@@ -86,12 +53,11 @@ router.post('/:login_or_register', async (req, res, next) => {
         email: req.body.email,
         password: hashedPassword,
       }).save()
-      res.send(user)
+      return res.send(user)
     } catch (err) {
-      res.status(400).send(err)
+      return res.status(400).send(err)
     }
-  }
-  if (req.params.login_or_register === 'login') {
+  } else if (req.params.login_or_register === 'login') {
     try {
       const user = await User.findOne({ email: req.body.email })
       if (user) {
@@ -101,13 +67,15 @@ router.post('/:login_or_register', async (req, res, next) => {
         const jwtPayload = { _id: user._id, email: user.email }
         const accessToken = jwt.sign(jwtPayload, ACCESS_TOKEN_SECRET)
 
-        res.json({ token: accessToken })
+        return res.json({ token: accessToken })
       } else {
-        res.json({ message: 'Invalid email or password' })
+        return res.json({ message: 'Invalid email or password' })
       }
     } catch (err) {
       console.log(`[DEBUG]\n${err}\n[DEBUG]`)
     }
+  } else {
+    return res.send('invalid request')
   }
 })
 
