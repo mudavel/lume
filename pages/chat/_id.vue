@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  async middleware({ $auth, $http, $config, redirect, route }) {
+  async middleware({ $auth, $http, redirect, route }) {
     const room = await $http.$post(`/api/room/${route.params.id}`)
     if (!room.allowed_users) return redirect('/')
     const whitelist = room.allowed_users

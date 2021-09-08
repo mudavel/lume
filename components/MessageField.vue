@@ -20,7 +20,7 @@
       <input class="submit" type="submit" title="Send message" value="" />
     </form>
     <p v-else class="connecting">
-      {{ state.charAt(0).toUpperCase() + state.slice(1) }}...
+      {{ state.charAt(0).toUpperCase() + state.slice(1) }}
     </p>
   </div>
 </template>
@@ -71,8 +71,7 @@ export default {
     })
 
     pusher.connection.bind('disconnected', () => {
-      room = pusher.subscribe(this.id)
-      this.state = pusher.connection.state
+      this.state = "Couldn't connect to the chat. Please refresh the page."
     })
 
     room.bind('send', (message) => {

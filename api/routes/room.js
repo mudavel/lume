@@ -9,7 +9,7 @@ router.post('/:name', async (req, res, next) => {
 
     const room = await Room.findOne({ fancy_name: req.params.name })
 
-    if (!room) return res.redirect('/')
+    if (!room) return
     res.json({
       _id: room._id,
       allowed_users: room.allowed_users,
