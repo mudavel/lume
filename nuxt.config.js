@@ -1,6 +1,9 @@
 import { sortRoutes } from '@nuxt/utils'
 
-const BASE_URL = require('./config').BASE_URL || 'https://lume.vercel.app'
+const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://lume.vercel.app'
+    : require('./config').BASE_URL
 
 export default {
   loading: false,
