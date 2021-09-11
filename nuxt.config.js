@@ -4,54 +4,9 @@ const BASE_URL = process.env.BASE_URL || require('./config').BASE_URL
 
 export default {
   loading: false,
-
-  router: {
-    extendRoutes(routes) {
-      routes.push(
-        {
-          name: 'notFound',
-          path: '*',
-          component: '~/pages/404.vue',
-        },
-        {
-          name: 'noAPI',
-          path: '/api/*',
-          component: '~/pages/api.vue',
-        }
-      )
-      sortRoutes(routes)
-    },
-    middleware: ['auth'],
-  },
-
-  head: {
-    title: 'Lume',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-  },
-
-  css: [
-    '~/assets/css/global/transitions',
-    '~/assets/css/global/main',
-    '~/assets/css/global/templates',
-  ],
-
   components: true,
-
   buildModules: ['@nuxtjs/eslint-module'],
-
-  modules: [
-    '@nuxt/http',
-    '@nuxtjs/auth-next',
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    '@nuxtjs/toast',
-  ],
-
+  serverMiddleware: ['~/api/app.js'],
   auth: {
     redirect: {
       login: '/login',
@@ -76,15 +31,47 @@ export default {
       },
     },
   },
-
-  http: {
-    baseURL: BASE_URL,
-  },
-
   axios: {
     baseURL: BASE_URL,
   },
-
+  css: [
+    '~/assets/css/global/transitions',
+    '~/assets/css/global/main',
+    '~/assets/css/global/templates',
+  ],
+  head: {
+    title: 'Lume',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        name: 'google-site-verification',
+        content: '0dGRAvJ1Qj9jdIHlpuV9n9By5vcfDsTPr3J3KqLIG1o',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Lume: An uncommon but nice chat application.',
+      },
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  },
+  http: {
+    baseURL: BASE_URL,
+  },
+  messages: {
+    error_404: 'Not found... Are you lost?',
+  },
+  modules: [
+    '@nuxt/http',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    '@nuxtjs/toast',
+  ],
+  publicRuntimeConfig: {
+    PUSHER_KEY: '389a8d7c96b12eded195',
+  },
   pwa: {
     manifest: {
       name: 'Lume',
@@ -96,7 +83,17 @@ export default {
       ogImage: '~/static/icon.png',
     },
   },
-
+  router: {
+    extendRoutes(routes) {
+      routes.push({
+        name: 'noAPI',
+        path: '/api/*',
+        component: '~/pages/api.vue',
+      })
+      sortRoutes(routes)
+    },
+    middleware: ['auth'],
+  },
   toast: {
     theme: 'outline',
     position: 'top-center',
@@ -104,12 +101,4 @@ export default {
     keepOnHover: true,
     singleton: true,
   },
-
-  publicRuntimeConfig: {
-    PUSHER_KEY: '389a8d7c96b12eded195',
-  },
-
-  serverMiddleware: ['~/api/app.js'],
-
-  build: {},
 }

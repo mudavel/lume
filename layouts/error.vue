@@ -1,20 +1,29 @@
 <template>
   <div class="wrapper">
-    <h1>404</h1>
-    <h2>Not Found</h2>
+    <h1>{{ error.statusCode }}</h1>
+    <h2>{{ error.message }}</h2>
     <NuxtLink class="basic-button" to="/">Go back</NuxtLink>
   </div>
 </template>
 
 <script>
 export default {
+  layout({ $auth }) {
+    return $auth.loggedIn ? 'default' : 'guest'
+  },
   transition: {
     name: 'fade',
     mode: 'opacity',
   },
+  props: {
+    error: {
+      type: Object,
+      default: null,
+    },
+  },
   head() {
     return {
-      title: '404 Not found.',
+      title: `${this.error.statusCode} ${this.error.message}`,
     }
   },
 }
