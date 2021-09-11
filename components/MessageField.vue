@@ -47,9 +47,6 @@ export default {
       state: '',
     }
   },
-  fetch() {
-    this.PUSHER_KEY = this.$config.PUSHER_KEY
-  },
   watch: {
     messages() {
       this.$nextTick(() => {
@@ -58,7 +55,8 @@ export default {
       })
     },
   },
-  async beforeMount() {
+  async mounted() {
+    this.PUSHER_KEY = this.$config.PUSHER_KEY
     this.checkIfIsOwner()
 
     pusher = new Pusher(this.PUSHER_KEY, {

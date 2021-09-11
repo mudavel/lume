@@ -105,7 +105,7 @@ export default {
     singleton: true,
   },
 
-  privateRuntimeConfig: {
+  publicRuntimeConfig: {
     PUSHER_KEY: '389a8d7c96b12eded195',
   },
 
