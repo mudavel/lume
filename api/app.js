@@ -36,6 +36,7 @@ app.post('/send', async (req, res, next) => {
     }).save()
 
     pusher.trigger(req.body.room_id, 'send', {
+      _id: message._id,
       sender: message.sender,
       content: message.content,
       isOwner: message.isOwner,

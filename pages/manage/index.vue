@@ -1,8 +1,6 @@
 <template>
   <div class="wrapper">
-    <h1>
-      <NuxtLink to="/" class="nuxt-link-title">Lume</NuxtLink> - Your Rooms
-    </h1>
+    <h1>Your Rooms</h1>
     <div class="rooms">
       <NuxtLink
         v-for="room of rooms"
@@ -41,9 +39,13 @@ export default {
   justify-content: center
 
 .rooms-button
-  width: 50%
+  width: 40%
   margin: 10px
 
 h1
   font-size: 50px
+
+@media (max-width: 800px)
+  .rooms-button
+    width: 80vw
 </style>

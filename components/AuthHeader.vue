@@ -1,5 +1,6 @@
 <template>
   <header class="page-header">
+    <NuxtLink class="nuxt-link-title to-home" to="/">Lume</NuxtLink>
     <div class="profile header-part">
       <div class="email" @click="showLogout">{{ $auth.user.email }}</div>
       <div class="blocker" @click="hideLogout"></div>

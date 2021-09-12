@@ -8,9 +8,9 @@
       <NuxtLink class="basic-button grid-button" to="/create">
         Create Room
       </NuxtLink>
-      <NuxtLink class="basic-button grid-button" to="/manage"
-        >Your Rooms</NuxtLink
-      >
+      <NuxtLink class="basic-button grid-button" to="/manage">
+        Your Rooms
+      </NuxtLink>
     </div>
   </div>
 </template>

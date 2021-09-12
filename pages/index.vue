@@ -34,10 +34,13 @@ h1
     animation: letter-spacing 0.75s infinite linear
 
 a, button
-  width: 20%
+  width: 30vw
   height: 50px
   font-size: 1.3em
-  font-family: 'Segoe UI'
   &:hover
     letter-spacing: 0.5px
+
+@media (max-width: 800px)
+  a, button
+    width: 80vw
 </style>
