@@ -82,6 +82,9 @@ export default {
       ogHost: 'https://lume.vercel.app',
       ogImage: '/icon.svg',
     },
+    icon: {
+      source: '~/static/icon.svg',
+    },
   },
   router: {
     extendRoutes(routes) {
