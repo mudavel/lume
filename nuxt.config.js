@@ -80,7 +80,7 @@ export default {
     meta: {
       name: 'Lume',
       ogHost: 'https://lume.vercel.app',
-      ogImage: '~/static/icon.png',
+      ogImage: '/icon.svg',
     },
   },
   router: {
