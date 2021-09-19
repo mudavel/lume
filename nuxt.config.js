@@ -5,7 +5,7 @@ const BASE_URL = process.env.BASE_URL || require('./config').BASE_URL
 export default {
   loading: false,
   components: true,
-  buildModules: ['@nuxtjs/eslint-module'],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/pwa'],
   serverMiddleware: ['~/api/app.js'],
   auth: {
     redirect: {
@@ -66,7 +66,6 @@ export default {
     '@nuxt/http',
     '@nuxtjs/auth-next',
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     '@nuxtjs/toast',
   ],
   publicRuntimeConfig: {
@@ -80,10 +79,10 @@ export default {
     meta: {
       name: 'Lume',
       ogHost: 'https://lume.vercel.app',
-      ogImage: '/icon.svg',
+      ogImage: '/icon.png',
     },
     icon: {
-      source: '~/static/icon.svg',
+      purpose: '',
     },
   },
   router: {
@@ -101,7 +100,6 @@ export default {
     theme: 'outline',
     position: 'top-center',
     duration: 2000,
-    keepOnHover: true,
     singleton: true,
   },
 }

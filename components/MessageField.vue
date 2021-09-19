@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper">
-    <h1><NuxtLink to="/" class="nuxt-link-title">Lume</NuxtLink></h1>
-    <p class="room-id" title="Copy chat ID" @click="toClipboard">{{ id }}</p>
+    <h1 class="room-id" title="Copy chat ID" @click="toClipboard">{{ id }}</h1>
     <div class="messages">
       <div v-for="msg in messages" :key="msg._id" class="message">
         <div v-if="!msg.isOwner" class="msg-username">{{ msg.sender }}</div>
@@ -96,7 +95,9 @@ export default {
       }
     },
     toClipboard() {
-      navigator.clipboard.writeText(this.id)
+      const baseUrl = process.env.BASE_URL || require('../config').BASE_URL
+      navigator.clipboard.writeText(baseUrl + this.$nuxt.$route.path)
+      this.$toast.success('URL copied!')
     },
     async checkIfIsOwner() {
       const room = await this.$http.$post(`/api/room/${this.id}`)

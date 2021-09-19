@@ -17,6 +17,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: 'Dashboard',
+    }
+  },
   methods: {
     async createRoom() {
       const newRoom = await this.$http.$post('/api/newroom', {
