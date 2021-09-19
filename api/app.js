@@ -27,7 +27,6 @@ app.use('/owner', require('./routes/owner'))
 app.use('/previous', require('./routes/previous'))
 
 app.post('/send', async (req, res, next) => {
-  const init = Date.now()
   try {
     const message = await new Message({
       sender: req.body.sender,
@@ -42,9 +41,7 @@ app.post('/send', async (req, res, next) => {
       content: message.content,
       isOwner: message.isOwner,
     }
-
     await pusher.trigger(req.body.room_id, 'send', sendData)
-    console.log(`Message sent in ${Date.now() - init} ms`)
 
     res.send(sendData)
   } catch (err) {
