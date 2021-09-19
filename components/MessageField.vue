@@ -95,7 +95,7 @@ export default {
       }
     },
     toClipboard() {
-      const baseUrl = process.env.BASE_URL || require('../config').BASE_URL
+      const baseUrl = this.$config.BASE_URL
       navigator.clipboard.writeText(baseUrl + this.$nuxt.$route.path)
       this.$toast.success('URL copied!')
     },

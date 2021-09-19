@@ -1,6 +1,6 @@
 import { sortRoutes } from '@nuxt/utils'
 
-const BASE_URL = process.env.BASE_URL || require('./config').BASE_URL
+const baseURL = process.env.BASE_URL || require('./config').BASE_URL
 
 export default {
   loading: false,
@@ -32,7 +32,7 @@ export default {
     },
   },
   axios: {
-    baseURL: BASE_URL,
+    baseURL,
   },
   css: [
     '~/assets/css/global/transitions',
@@ -57,7 +57,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   http: {
-    baseURL: BASE_URL,
+    baseURL,
   },
   messages: {
     error_404: 'Not found... Are you lost?',
@@ -70,6 +70,7 @@ export default {
   ],
   publicRuntimeConfig: {
     PUSHER_KEY: '389a8d7c96b12eded195',
+    BASE_URL: baseURL,
   },
   pwa: {
     manifest: {
