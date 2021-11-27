@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper">
-    <h1 class="room-id" title="Copy chat ID" @click="toClipboard">{{ id }}</h1>
+    <h1 class="room-id" title="Copy Link" @click="toClipboard">{{ id }}</h1>
     <div class="messages">
       <div v-for="msg in messages" :key="msg._id" class="message">
         <div v-if="!msg.isOwner" class="msg-username">{{ msg.sender }}</div>
         <div v-else class="msg-username owner">{{ msg.sender }}</div>
         <p class="msg-text">{{ msg.content }}</p>
+        <p class="msg-time">{{ msg.time }}</p>
       </div>
     </div>
     <form v-if="connected" class="msg-input-form" @submit.prevent="sendMessage">
@@ -97,7 +98,7 @@ export default {
     toClipboard() {
       const baseUrl = this.$config.BASE_URL
       navigator.clipboard.writeText(baseUrl + this.$nuxt.$route.path)
-      this.$toast.success('URL copied!')
+      this.$toast.info('Link copied!')
     },
     async checkIfIsOwner() {
       const room = await this.$http.$post(`/api/room/${this.id}`)

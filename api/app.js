@@ -33,6 +33,7 @@ app.post('/send', async (req, res, next) => {
       content: req.body.content,
       room: req.body.room,
       isOwner: req.body.isOwner,
+      time: formatTime(new Date(Date.now())),
     }).save()
 
     const sendData = {
@@ -40,6 +41,7 @@ app.post('/send', async (req, res, next) => {
       sender: message.sender,
       content: message.content,
       isOwner: message.isOwner,
+      time: message.time,
     }
     await pusher.trigger(req.body.room_id, 'send', sendData)
 
@@ -48,6 +50,12 @@ app.post('/send', async (req, res, next) => {
     console.log(err)
   }
 })
+
+function formatTime(timestamp) {
+  const hours = ('0' + timestamp.getHours()).slice(-2)
+  const minutes = ('0' + timestamp.getMinutes()).slice(-2)
+  return `${hours}:${minutes}`
+}
 
 mongoose.connect(
   DB_CONNECTION,

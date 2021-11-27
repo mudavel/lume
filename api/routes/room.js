@@ -22,14 +22,22 @@ router.post('/:name', async (req, res, next) => {
   }
 })
 
-router.patch('/:fancyName', async (req, res, next) => {
+router.patch('/:addOrRemove/:fancyName', async (req, res, next) => {
   try {
-    if (!(await User.findOne({ username: req.body.username }))) return
-    const updatedRoom = await Room.updateOne(
-      { fancy_name: req.params.fancyName },
-      { $addToSet: { allowed_users: req.body.username } }
-    )
-    res.json(updatedRoom)
+    if (req.params.addOrRemove === 'add') {
+      if (!(await User.findOne({ username: req.body.username }))) return
+      const updatedRoom = await Room.updateOne(
+        { fancy_name: req.params.fancyName },
+        { $addToSet: { allowed_users: req.body.username } }
+      )
+      res.json(updatedRoom)
+    } else if (req.params.addOrRemove === 'remove') {
+      const deletedUser = await Room.updateOne(
+        { fancy_name: req.params.fancyName },
+        { $pull: { allowed_users: req.body.username } }
+      )
+      res.json(deletedUser)
+    }
   } catch (err) {
     res.json({ message: err })
   }
