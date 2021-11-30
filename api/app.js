@@ -26,36 +26,28 @@ app.use('/exists', require('./routes/exists'))
 app.use('/owner', require('./routes/owner'))
 app.use('/previous', require('./routes/previous'))
 
-app.post('/send', async (req, res, next) => {
+app.post('/:sendOrDelete', async (req, res, next) => {
   try {
-    const message = await new Message({
-      sender: req.body.sender,
-      content: req.body.content,
-      room: req.body.room,
-      isOwner: req.body.isOwner,
-      time: formatTime(new Date(Date.now())),
-    }).save()
+    if (req.params.sendOrDelete === 'send') {
+      const message = await new Message({
+        sender: req.body.sender,
+        content: req.body.content,
+        room: req.body.roomId,
+        isOwner: req.body.isOwner,
+      }).save()
 
-    const sendData = {
-      _id: message._id,
-      sender: message.sender,
-      content: message.content,
-      isOwner: message.isOwner,
-      time: message.time,
+      await pusher.trigger(req.body.roomId, 'send', message)
+
+      res.send(message)
+    } else if (req.params.sendOrDelete === 'delete') {
+      await pusher.trigger(req.body.room, 'delete', req.body)
+      const deletedMessage = await Message.deleteOne(req.body)
+      res.send(deletedMessage)
     }
-    await pusher.trigger(req.body.room_id, 'send', sendData)
-
-    res.send(sendData)
   } catch (err) {
     console.log(err)
   }
 })
-
-function formatTime(timestamp) {
-  const hours = ('0' + timestamp.getHours()).slice(-2)
-  const minutes = ('0' + timestamp.getMinutes()).slice(-2)
-  return `${hours}:${minutes}`
-}
 
 mongoose.connect(
   DB_CONNECTION,

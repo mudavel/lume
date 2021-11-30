@@ -51,7 +51,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Lume: An uncommon but nice chat application.',
+        content: 'An uncommon but nice chat application.',
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

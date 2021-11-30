@@ -1,12 +1,21 @@
 <template>
   <div class="wrapper">
     <h1 class="room-id" title="Copy Link" @click="toClipboard">{{ id }}</h1>
-    <div class="messages">
+    <div ref="messages" class="messages">
       <div v-for="msg in messages" :key="msg._id" class="message">
-        <div v-if="!msg.isOwner" class="msg-username">{{ msg.sender }}</div>
-        <div v-else class="msg-username owner">{{ msg.sender }}</div>
-        <p class="msg-text">{{ msg.content }}</p>
-        <p class="msg-time">{{ msg.time }}</p>
+        <div class="msg-wrapper">
+          <div v-if="!msg.isOwner" class="msg-username">{{ msg.sender }}</div>
+          <div v-else class="msg-username owner">{{ msg.sender }}</div>
+          <p class="msg-text">{{ msg.content }}</p>
+          <p class="msg-time">{{ formatMongoTime(msg.creationDate) }}</p>
+        </div>
+        <button
+          v-if="msg.sender === $auth.user.username || isOwner"
+          class="msg-delete"
+          @click="deleteMessage(msg)"
+        >
+          x
+        </button>
       </div>
     </div>
     <form v-if="connected" class="msg-input-form" @submit.prevent="sendMessage">
@@ -47,14 +56,6 @@ export default {
       state: '',
     }
   },
-  watch: {
-    messages() {
-      this.$nextTick(() => {
-        const element = document.querySelector('.messages')
-        element.scrollTo(0, element.scrollHeight)
-      })
-    },
-  },
   async mounted() {
     this.PUSHER_KEY = this.$config.PUSHER_KEY
     this.checkIfIsOwner()
@@ -74,6 +75,18 @@ export default {
 
     room.bind('send', (message) => {
       this.messages.push(message)
+      this.$nextTick(() => {
+        this.$refs.messages.scrollTo(0, this.$refs.messages.scrollHeight)
+      })
+    })
+
+    room.bind('delete', (message) => {
+      const index = this.messages.findIndex(
+        (msg) =>
+          msg.creationDate === message.creationDate &&
+          msg.owner === message.owner
+      )
+      this.messages.splice(index, 1)
     })
 
     const previousMessages = await this.$http.$post(`/api/previous/${this.id}`)
@@ -86,10 +99,9 @@ export default {
       if (content) {
         this.message = ''
         const data = {
-          room_id: this.id,
+          roomId: this.id,
           sender: this.username,
           content,
-          room: this.id,
           isOwner: this.isOwner,
         }
         await this.$http.$post('/api/send', data)
@@ -103,6 +115,15 @@ export default {
     async checkIfIsOwner() {
       const room = await this.$http.$post(`/api/room/${this.id}`)
       this.isOwner = room.owner === this.$auth.user.username
+    },
+    formatMongoTime(mongoTime) {
+      const timestamp = new Date(mongoTime)
+      const hours = ('0' + timestamp.getHours()).slice(-2)
+      const minutes = ('0' + timestamp.getMinutes()).slice(-2)
+      return `${hours}:${minutes}`
+    },
+    async deleteMessage(msg) {
+      await this.$http.$post('/api/delete', msg)
     },
   },
 }

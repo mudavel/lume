@@ -18,13 +18,9 @@ const MessageSchema = Schema({
     type: Boolean,
     required: true,
   },
-  creation_date: {
+  creationDate: {
     type: Date,
     default: Date.now,
-  },
-  time: {
-    type: String,
-    required: true,
   },
 })
 

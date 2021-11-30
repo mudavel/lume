@@ -4,7 +4,7 @@
     <div class="profile header-part">
       <div class="email" @click="showLogout">{{ $auth.user.email }}</div>
       <div class="blocker" @click="hideLogout"></div>
-      <div class="logout right-side" @click="logout">Logout</div>
+      <div class="logout" @click="logout">Logout</div>
     </div>
   </header>
 </template>
