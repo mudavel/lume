@@ -6,6 +6,7 @@ export default {
   loading: false,
   components: true,
   buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/pwa'],
+  plugins: ['~/plugins/gtag'],
   serverMiddleware: ['~/api/app.js'],
   auth: {
     redirect: {

@@ -91,3 +91,6 @@ sw.*
 
 # Configuration file
 config.js
+
+# Tests file
+pages/test.vue

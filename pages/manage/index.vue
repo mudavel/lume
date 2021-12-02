@@ -21,7 +21,7 @@ export default {
       rooms: [],
     }
   },
-  async fetch() {
+  async beforeCreate() {
     const rooms = await this.$http.$post(
       `/api/owner/${this.$auth.user.username}`
     )
