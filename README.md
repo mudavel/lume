@@ -1,3 +1,3 @@
-# lume
-
-Web app to chat with people
+### (Under development)
+# Lume
+#### Basic chatting app made with Nuxt.js
