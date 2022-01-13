@@ -4,6 +4,10 @@ const BASE_URL = process.env.BASE_URL || require('./config').BASE_URL
 const PUSHER_KEY =
   process.env.PUSHER_KEY || require('./config').PUSHER_SECRETS.key
 
+const GOOGLE_SEARCH_CONSOLE_KEY =
+  process.env.GOOGLE_SEARCH_CONSOLE_KEY ||
+  require('./config').GOOGLE_SEARCH_CONSOLE_KEY
+
 export default {
   loading: false,
   components: true,
@@ -49,7 +53,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         name: 'google-site-verification',
-        content: '0dGRAvJ1Qj9jdIHlpuV9n9By5vcfDsTPr3J3KqLIG1o',
+        content: GOOGLE_SEARCH_CONSOLE_KEY,
       },
       {
         hid: 'description',
