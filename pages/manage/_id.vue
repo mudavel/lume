@@ -1,23 +1,22 @@
 <template>
   <div class="wrapper">
     <h1>
-      <NuxtLink
-        :to="'/chat/' + roomName"
-        class="nuxt-link-active nuxt-link-title"
-        >{{ roomName }}</NuxtLink
-      >
+      <NuxtLink :to="'/chat/' + id" class="nuxt-link-active nuxt-link-title">{{
+        fancy_name
+      }}</NuxtLink>
     </h1>
+    <p class="roomId">{{ id }}</p>
     <div class="manage-whitelist">
       <h2>Manage users</h2>
       <div class="user-wrapper">
         <div v-for="user in allowed_users" :key="user" class="allowed-user">
           <p>{{ user }}</p>
-          <button class="remove" @click="kick(user)">x</button>
+          <button class="remove" @click="kick(user)">-</button>
         </div>
       </div>
       <form @submit.prevent="addToWhitelist">
         <input
-          v-model="includeUsername"
+          v-model="include_username"
           type="text"
           placeholder="Username"
           class="username-input"
@@ -32,44 +31,46 @@
 <script>
 export default {
   async middleware({ $auth, $http, redirect, route }) {
-    const room = await $http.$post(`/api/room/${route.params.name}`)
+    const room = await $http.$post(`/api/room/${route.params.id}`)
     const owner = room.owner
     const username = $auth.$state.user.username
     if (!(owner === username)) return redirect('/')
   },
   data() {
     return {
-      roomName: this.$route.params.name,
-      includeUsername: '',
+      id: this.$route.params.id,
+      fancy_name: '',
+      include_username: '',
       allowed_users: '',
     }
   },
   head() {
     return {
-      title: `Managing ${this.roomName}`,
+      title: `Managing ${this.fancy_name}`,
     }
   },
   async beforeMount() {
-    const room = await this.$http.$post(`/api/room/${this.roomName}`)
+    const room = await this.$http.$post(`/api/room/${this.$route.params.id}`)
     this.allowed_users = room.allowed_users
+    this.fancy_name = room.fancy_name
   },
   methods: {
     async addToWhitelist() {
-      const username = this.includeUsername
-      this.includeUsername = ''
+      const username = this.include_username
+      this.include_username = ''
       const user = await this.$http.$post(`/api/exists/username/${username}`)
       if (!user) return this.$toast.error('User not found.')
 
-      const room = await this.$http.$post(`/api/room/${this.roomName}`)
+      const room = await this.$http.$post(`/api/room/${this.id}`)
       if (room.allowed_users.includes(username))
         return this.$toast.info(`${username} is already included.`)
 
-      await this.$http.$patch(`/api/room/add/${this.roomName}`, { username })
+      await this.$http.$patch(`/api/room/add/${this.id}`, { username })
       this.allowed_users.push(username)
       this.$toast.success(`${username} was included!`)
     },
     async kick(username) {
-      await this.$http.$patch(`/api/room/remove/${this.roomName}`, { username })
+      await this.$http.$patch(`/api/room/remove/${this.id}`, { username })
       const indexToRemove = this.allowed_users.indexOf(username)
       this.allowed_users.splice(indexToRemove, 1)
       this.$toast.success(`${username} was kicked!`)
@@ -79,13 +80,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
+.roomId
+  font-size: 0.8em
+  margin-bottom: 50px
+
 .username-input
   width: 100%
   margin-left: 0px
-
-form
-  width: 100%
-  flex-direction: row
 
 .manage-whitelist
   display: flex
@@ -95,19 +97,11 @@ form
   padding: 30px
   border-radius: 20px
 
-h2
-  font-weight: normal
-  margin-bottom: 6%
-  user-select: none
-
 .submit
   width: 50px
   margin: 0px
   padding: 0px
   font-size: 1.5em
-
-a.nuxt-link-active
-  margin-bottom: 3%
 
 .remove
   display: none
@@ -145,6 +139,18 @@ a.nuxt-link-active
   width: 100%
   max-height: 50vh
   overflow-x: hidden
+
+h1
+  margin-bottom: 0px
+
+h2
+  font-weight: normal
+  margin-bottom: 6%
+  user-select: none
+
+form
+  width: 100%
+  flex-direction: row
 
 @media (max-width: 600px)
   .manage-whitelist

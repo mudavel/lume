@@ -2,12 +2,12 @@ const router = require('express').Router()
 const Room = require('../model/Room')
 const User = require('../model/User')
 
-router.post('/:name', async (req, res, next) => {
+router.post('/:_id', async (req, res, next) => {
   try {
     if (req.originalUrl.includes('?'))
       return res.redirect(req.originalUrl.split('?').shift())
 
-    const room = await Room.findOne({ fancy_name: req.params.name })
+    const room = await Room.findOne({ _id: req.params._id })
 
     if (!room) return
     res.json({
@@ -22,18 +22,18 @@ router.post('/:name', async (req, res, next) => {
   }
 })
 
-router.patch('/:addOrRemove/:fancyName', async (req, res, next) => {
+router.patch('/:addOrRemove/:_id', async (req, res, next) => {
   try {
     if (req.params.addOrRemove === 'add') {
       if (!(await User.findOne({ username: req.body.username }))) return
       const updatedRoom = await Room.updateOne(
-        { fancy_name: req.params.fancyName },
+        { _id: req.params._id },
         { $addToSet: { allowed_users: req.body.username } }
       )
       res.json(updatedRoom)
     } else if (req.params.addOrRemove === 'remove') {
       const deletedUser = await Room.updateOne(
-        { fancy_name: req.params.fancyName },
+        { _id: req.params._id },
         { $pull: { allowed_users: req.body.username } }
       )
       res.json(deletedUser)

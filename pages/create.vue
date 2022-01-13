@@ -27,8 +27,8 @@ export default {
         owner: this.$auth.user.username,
         name,
       })
-      if (newRoom.id) {
-        return await window.$nuxt.$router.push(`/chat/${name}`)
+      if (newRoom._id) {
+        return await window.$nuxt.$router.push(`/chat/${newRoom._id}`)
       }
       this.$toast.error(
         'This name is already in use. Please choose another one.'

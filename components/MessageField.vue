@@ -1,10 +1,14 @@
 <template>
   <div class="wrapper">
-    <h1 class="room-id" title="Copy Link" @click="toClipboard">{{ id }}</h1>
+    <h1 class="room-id" title="Copy Link" @click="toClipboard">
+      {{ fancyName }}
+    </h1>
     <div ref="messages" class="messages">
       <div v-for="msg in messages" :key="msg._id" class="message">
         <div class="msg-wrapper">
-          <div v-if="!msg.isOwner" class="msg-username">{{ msg.sender }}</div>
+          <div v-if="!(msg.sender === owner)" class="msg-username">
+            {{ msg.sender }}
+          </div>
           <div v-else class="msg-username owner">{{ msg.sender }}</div>
           <p class="msg-text">{{ msg.content }}</p>
           <p class="msg-time">{{ formatMongoTime(msg.creationDate) }}</p>
@@ -42,7 +46,11 @@ export default {
   props: {
     id: {
       type: String,
-      default: 'global',
+      default: '',
+    },
+    fancyName: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -54,6 +62,7 @@ export default {
       PUSHER_KEY: '',
       connected: false,
       state: '',
+      owner: '',
     }
   },
   async mounted() {
@@ -76,6 +85,7 @@ export default {
     room.bind('send', (message) => {
       this.messages.push(message)
       this.$nextTick(() => {
+        if (!this.$refs.messages) return
         this.$refs.messages.scrollTo(0, this.$refs.messages.scrollHeight)
       })
     })
@@ -90,7 +100,9 @@ export default {
     })
 
     const previousMessages = await this.$http.$post(`/api/previous/${this.id}`)
+
     this.messages = previousMessages
+
     this.state = pusher.connection.state
   },
   methods: {
@@ -99,10 +111,9 @@ export default {
       if (content) {
         this.message = ''
         const data = {
-          roomId: this.id,
+          room: this.id,
           sender: this.username,
           content,
-          isOwner: this.isOwner,
         }
         await this.$http.$post('/api/send', data)
       }
@@ -114,7 +125,8 @@ export default {
     },
     async checkIfIsOwner() {
       const room = await this.$http.$post(`/api/room/${this.id}`)
-      this.isOwner = room.owner === this.$auth.user.username
+      this.owner = room.owner
+      this.isOwner = this.owner === this.$auth.user.username
     },
     formatMongoTime(mongoTime) {
       const timestamp = new Date(mongoTime)

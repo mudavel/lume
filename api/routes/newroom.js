@@ -4,7 +4,8 @@ const router = express.Router()
 
 router.post('/', async (req, res, next) => {
   try {
-    if (!!(await Room.findOne({ fancy_name: req.body.name })))
+    console.log(await Room.findOne({ fancy_name: req.body.name }))
+    if (await Room.findOne({ fancy_name: req.body.name }))
       return res.json({ message: `${req.body.name} already exists` })
     const room = new Room({
       owner: req.body.owner,
@@ -12,8 +13,8 @@ router.post('/', async (req, res, next) => {
       allowed_users: req.body.owner,
     })
     const savedRoom = await room.save()
-    const id = savedRoom._id.toString()
-    res.json({ id })
+    const _id = savedRoom._id.toString()
+    res.json({ _id })
   } catch (err) {
     console.log(err)
   }

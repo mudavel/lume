@@ -3,8 +3,8 @@ const User = require('../model/User')
 
 router.post('/:what/:query', async (req, res, next) => {
   try {
-    if (!['email', 'username'].includes(req.params.what))
-      return res.send('invalid request')
+    const options = ['email', 'username']
+    if (!options.includes(req.params.what)) return res.send('invalid request')
 
     const exists = await User.exists({
       [req.params.what]: req.params.query,

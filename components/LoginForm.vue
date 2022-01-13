@@ -14,6 +14,7 @@
       class="password form-input"
       placeholder="Password"
       name="password"
+      autocomplete="current-password"
       required
     />
     <input type="submit" class="submit" value="Login" />

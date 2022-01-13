@@ -5,7 +5,7 @@
       <NuxtLink
         v-for="room of rooms"
         :key="room._id"
-        :to="'/manage/' + room.fancy_name"
+        :to="'/manage/' + room._id"
         class="basic-button rooms-button"
       >
         {{ room.fancy_name }}

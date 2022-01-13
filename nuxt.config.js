@@ -1,6 +1,8 @@
 import { sortRoutes } from '@nuxt/utils'
 
-const baseURL = process.env.BASE_URL || require('./config').BASE_URL
+const BASE_URL = process.env.BASE_URL || require('./config').BASE_URL
+const PUSHER_KEY =
+  process.env.PUSHER_KEY || require('./config').PUSHER_SECRETS.key
 
 export default {
   loading: false,
@@ -33,7 +35,7 @@ export default {
     },
   },
   axios: {
-    baseURL,
+    baseURL: BASE_URL,
   },
   css: [
     '~/assets/css/global/transitions',
@@ -58,7 +60,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   http: {
-    baseURL,
+    baseURL: BASE_URL,
   },
   messages: {
     error_404: 'Not found... Are you lost?',
@@ -70,8 +72,8 @@ export default {
     '@nuxtjs/toast',
   ],
   publicRuntimeConfig: {
-    PUSHER_KEY: '389a8d7c96b12eded195',
-    BASE_URL: baseURL,
+    PUSHER_KEY,
+    BASE_URL,
   },
   pwa: {
     manifest: {

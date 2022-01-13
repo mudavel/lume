@@ -19,7 +19,8 @@ const pusher = new Pusher(pusherSecrets)
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('/newroom', require('./routes/new-room'))
+
+app.use('/newroom', require('./routes/newroom'))
 app.use('/auth', require('./routes/auth'))
 app.use('/room', require('./routes/room'))
 app.use('/exists', require('./routes/exists'))
@@ -32,11 +33,10 @@ app.post('/:sendOrDelete', async (req, res, next) => {
       const message = await new Message({
         sender: req.body.sender,
         content: req.body.content,
-        room: req.body.roomId,
-        isOwner: req.body.isOwner,
+        room: req.body.room,
       }).save()
 
-      await pusher.trigger(req.body.roomId, 'send', message)
+      await pusher.trigger(req.body.room, 'send', message)
 
       res.send(message)
     } else if (req.params.sendOrDelete === 'delete') {

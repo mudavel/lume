@@ -1,5 +1,5 @@
 <template>
-  <MessageField :id="roomName" />
+  <MessageField :id="id" :fancy-name="fancy_name" />
 </template>
 
 <script>
@@ -14,13 +14,18 @@ export default {
   transition: 'back',
   data() {
     return {
-      roomName: this.$route.params.id,
+      fancy_name: '',
+      id: this.$route.params.id,
     }
   },
   head() {
     return {
-      title: `Lume: ${this.roomName}`,
+      title: `Lume: ${this.fancy_name}`,
     }
+  },
+  async beforeCreate() {
+    const room = await this.$http.$post(`/api/room/${this.$route.params.id}`)
+    this.fancy_name = room.fancy_name
   },
 }
 </script>

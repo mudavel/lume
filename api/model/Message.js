@@ -14,10 +14,6 @@ const MessageSchema = Schema({
     type: String,
     required: true,
   },
-  isOwner: {
-    type: Boolean,
-    required: true,
-  },
   creationDate: {
     type: Date,
     default: Date.now,
